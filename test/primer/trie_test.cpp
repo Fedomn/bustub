@@ -12,7 +12,12 @@
 
 namespace bustub {
 
-TEST(TrieTest, ConstructorTest) { auto trie = Trie(); }
+TEST(TrieTest, ConstructorTest) {
+  auto trie = Trie();
+  trie.Get<uint32_t>("test");
+  trie.Remove("test");
+  trie = trie.Put<uint32_t>("test-int", 233);
+}
 
 TEST(TrieTest, BasicPutTest) {
   auto trie = Trie();

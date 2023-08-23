@@ -36,12 +36,7 @@ auto Trie::Put(std::string_view key, T value) const -> Trie {
   // Note that `T` might be a non-copyable type. Always use `std::move` when creating `shared_ptr` on that value.
   // You should walk through the trie and create new nodes if necessary. If the node corresponding to the key already
   // exists, you should create a new `TrieNodeWithValue`.
-  std::shared_ptr<TrieNode> new_root;
-  if (root_ == nullptr) {
-    new_root = std::make_shared<TrieNode>();
-  } else {
-    new_root = root_->Clone();
-  }
+  std::shared_ptr<TrieNode> new_root = root_->Clone();
 
   auto cursor = new_root;
   // walk to the penultimate node
