@@ -42,13 +42,13 @@ class TrieStore {
  private:
   // This mutex protects the root. Everytime you want to access the trie root or modify it, you
   // will need to take this lock.
-  std::mutex root_lock_;
+  std::shared_mutex root_lock_;
 
   // This mutex sequences all writes operations and allows only one write operation at a time.
   std::mutex write_lock_;
 
   // Stores the current root for the trie.
-  Trie root_;
+  Trie root_{Trie()};
 };
 
 }  // namespace bustub

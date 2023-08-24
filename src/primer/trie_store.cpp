@@ -11,20 +11,28 @@ auto TrieStore::Get(std::string_view key) -> std::optional<ValueGuard<T>> {
   // (2) Lookup the value in the trie.
   // (3) If the value is found, return a ValueGuard object that holds a reference to the value and the
   //     root. Otherwise, return std::nullopt.
-  throw NotImplementedException("TrieStore::Get is not implemented.");
+  std::shared_lock<std::shared_mutex> l(root_lock_);
+  auto v = root_.Get<T>(key);
+  if (v == nullptr) {
+    return std::nullopt;
+  }
+  auto guard = ValueGuard<T>(root_, *v);
+  return guard;
 }
 
 template <class T>
 void TrieStore::Put(std::string_view key, T value) {
   // You will need to ensure there is only one writer at a time. Think of how you can achieve this.
   // The logic should be somehow similar to `TrieStore::Get`.
-  throw NotImplementedException("TrieStore::Put is not implemented.");
+  std::unique_lock<std::shared_mutex> l(root_lock_);
+  root_ = root_.Put<T>(key, std::move(value));
 }
 
 void TrieStore::Remove(std::string_view key) {
   // You will need to ensure there is only one writer at a time. Think of how you can achieve this.
   // The logic should be somehow similar to `TrieStore::Get`.
-  throw NotImplementedException("TrieStore::Remove is not implemented.");
+  std::unique_lock<std::shared_mutex> l(root_lock_);
+  root_ = root_.Remove(key);
 }
 
 // Below are explicit instantiation of template functions.
