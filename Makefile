@@ -20,3 +20,8 @@ test-p0:
 	./test/trie_noncopy_test && \
 	./test/trie_store_test && \
 	./test/trie_store_noncopy_test
+
+test-p1:
+	cd build && \
+	make lru_k_replacer_test -j$(nproc) && \
+	./test/lru_k_replacer_test
