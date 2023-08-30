@@ -24,4 +24,6 @@ test-p0:
 test-p1:
 	cd build && \
 	make lru_k_replacer_test -j$(nproc) && \
-	./test/lru_k_replacer_test
+	make buffer_pool_manager_test -j$(nproc) && \
+    ./test/lru_k_replacer_test && \
+	./test/buffer_pool_manager_test

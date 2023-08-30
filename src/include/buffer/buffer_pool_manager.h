@@ -208,5 +208,12 @@ class BufferPoolManager {
   }
 
   // TODO(student): You may add additional private members and helper functions
+  auto FindAvailableFrame(frame_id_t *frame_id) -> bool;
+
+  /**
+   *
+   * @param frame_id means index in pages_ (in buffer pool), such as frame_id = 0 means pages_[0]
+   */
+  void PinPage(frame_id_t frame_id);
 };
 }  // namespace bustub
