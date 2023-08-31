@@ -29,3 +29,15 @@ test-p1:
     ./test/lru_k_replacer_test && \
 	./test/buffer_pool_manager_test && \
 	./test/page_guard_test
+
+bpm-bench-build:
+	rm -rf cmake-build-relwithdebinfo && \
+	mkdir cmake-build-relwithdebinfo && \
+    cd cmake-build-relwithdebinfo && \
+    cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo && \
+    make -j`nproc` bpm-bench
+
+bpm-bench-run:
+	cd cmake-build-relwithdebinfo && \
+    ./bin/bustub-bpm-bench --duration 5000 --latency 1 && \
+    ./bin/bustub-bpm-bench --duration 5000 --latency 0
